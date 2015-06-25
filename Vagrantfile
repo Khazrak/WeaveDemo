@@ -17,7 +17,7 @@ ENV['VAGRANT_DEFAULT_PROVIDER'] = 'virtualbox'
 #
 
 $num_instances = 3
-$instance_name_prefix = "weave-gs"
+$instance_name_prefix = "weave-demo"
 $share_home = false
 $vm_gui = false
 $vm_memory = 1024
