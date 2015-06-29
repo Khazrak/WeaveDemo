@@ -46,21 +46,21 @@ vagrant up
 
 The Jars and the Dockerfile will be copied into the VM's
 
-Host 1 (Producer 1)
+Host 1 (Consumer 1)
 ```bash
 vagrant ssh weave-demo-01
 cd /home/vagrant/producer
 sudo docker build --rm -t "khazrak/weaver-producer:1.0" .
 ```
 
-Host 2 (Producer 2)
+Host 2 (Producer 1)
 ```bash
 vagrant ssh weave-demo-02
 cd /home/vagrant/producer
 sudo docker build --rm -t "khazrak/weaver-producer:1.0" .
 ```
 
-Host 3 (Producer 3)
+Host 3 (Producer 2)
 ```bash
 vagrant ssh weave-demo-03
 cd /home/vagrant/consumer
@@ -73,7 +73,9 @@ Install Weave on all the VM's
 The IP addresses we use for this demo are
 
 172.17.8.101    weave-demo-01
+
 172.17.8.102    weave-demo-02
+
 172.17.8.103    weave-demo-02
 
 ### Install Weave
