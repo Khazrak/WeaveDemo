@@ -4,8 +4,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.net.InetAddress;
+import java.net.NetworkInterface;
 import java.net.UnknownHostException;
 import java.time.LocalDateTime;
+import java.util.Enumeration;
 
 /**
  * Created by khazrak on 2015-06-27.
@@ -31,14 +33,18 @@ public class RestController {
     @RequestMapping(value = "/hostname", method = RequestMethod.GET)
     public String host()
     {
-        String hostname = "Unknown";
-        try {
-            hostname = InetAddress.getLocalHost().getHostName();
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
+
+        System.out.println("Someone is requesting me");
+
+        String sysEnvStr = System.getenv("SERVICE_NAME");
+
+        if(sysEnvStr == null)
+        {
+            sysEnvStr = "Unknown";
         }
 
-        return hostname;
+        return sysEnvStr;
     }
+
 
 }

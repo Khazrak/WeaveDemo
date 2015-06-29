@@ -9,7 +9,9 @@ require 'ipaddr'
 Vagrant.require_version ">= 1.6.0"
 
 VAGRANTFILE_API_VERSION = "2"
-SIMPLE_DOCKER_APACHE = File.join(File.dirname(__FILE__), "Dockerfile-simple-apache")
+SERVICE_CONSUMER_JAR = File.join(File.dirname(__FILE__), "weave-demo-consumer/build/libs/weave-demo-consumer-0.0.1-SNAPSHOT.jar")
+SERVICE_DOCKERFILE = File.join(File.dirname(__FILE__), "Dockerfile")
+SERVICE_PRODUCER_JAR = File.join(File.dirname(__FILE__), "weave-demo-producer/build/libs/weave-demo-producer-0.0.1-SNAPSHOT.jar")
 
 ENV['VAGRANT_DEFAULT_PROVIDER'] = 'virtualbox'
 
@@ -19,7 +21,7 @@ ENV['VAGRANT_DEFAULT_PROVIDER'] = 'virtualbox'
 $num_instances = 3
 $instance_name_prefix = "weave-demo"
 $share_home = false
-$vm_gui = false
+$vm_gui = true
 $vm_memory = 1024
 $vm_cpus = 1
 $vm_starting_ip = "172.17.8.100"
@@ -69,11 +71,16 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 36A1D7869245C8950F966E92D8576A8BA88D21E9
         apt-get update
         apt-get install -y lxc-docker
+        sudo docker pull java:openjdk-8u45-jre
     SHELL
 
     # for the purposes of our example we create a dockerfile to install apache
 
-    if File.exist?(SIMPLE_DOCKER_APACHE)
-        config.vm.provision "file", :source => "#{SIMPLE_DOCKER_APACHE}", :destination => "/home/vagrant/Dockerfile"
-    end 
+    config.vm.provision "file", :source => "#{SERVICE_CONSUMER_JAR}", :destination => "/home/vagrant/consumer/weave-demo.jar"
+    config.vm.provision "file", :source => "#{SERVICE_DOCKERFILE}", :destination => "/home/vagrant/consumer/Dockerfile"
+    config.vm.provision "file", :source => "#{SERVICE_PRODUCER_JAR}", :destination => "/home/vagrant/producer/weave-demo.jar"
+    config.vm.provision "file", :source => "#{SERVICE_DOCKERFILE}", :destination => "/home/vagrant/producer/Dockerfile"
+    #if File.exist?(SIMPLE_DOCKER_APACHE)
+    #    config.vm.provision "file", :source => "#{SERVICE_CONSUMER_JAR}", :destination => "/home/vagrant/weave-consumer-demo.jar"
+    #end 
 end

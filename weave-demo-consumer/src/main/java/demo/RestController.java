@@ -5,7 +5,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.InetAddress;
+import java.net.NetworkInterface;
 import java.net.UnknownHostException;
+import java.util.Enumeration;
 import java.util.ResourceBundle;
 
 /**
@@ -15,28 +17,24 @@ import java.util.ResourceBundle;
 @RequestMapping("/rest")
 public class RestController {
 
-    @RequestMapping(value = "/get",method = RequestMethod.GET)
-    public String getFromService()
-    {
+    @RequestMapping(value = "/get", method = RequestMethod.GET)
+    public String getFromService() {
         ResourceBundle properties = ResourceBundle.getBundle("service");
         RestTemplate restTemplate = new RestTemplate();
 
         String serviceHostname = properties.getString("servicename");
 
-        String res = restTemplate.getForObject("http://"+serviceHostname+":8080/rest/hostname", String.class);
+        String res = restTemplate.getForObject("http://" + serviceHostname + ":8080/rest/hostname", String.class);
 
-        return "FROM "+getLocalHostname() + ": " + res;
-    }
+        String sysEnvStr = System.getenv("SERVICE_NAME");
 
-    private String getLocalHostname()
-    {
-        try {
-            return InetAddress.getLocalHost().getHostName();
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
+        if(sysEnvStr == null)
+        {
+            sysEnvStr = "Unknown";
         }
 
-        return "Unknown";
+        return "Consumer: " + sysEnvStr + ", Producer: " + res + "\n";
     }
+
 
 }

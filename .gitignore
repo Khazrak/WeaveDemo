@@ -1,2 +1,7 @@
 .vagrant
 *~
+.*
+*.iml
+*.ipr
+*.iws
+*/build/*
