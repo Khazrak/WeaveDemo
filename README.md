@@ -50,7 +50,7 @@ Host 1 (Consumer 1)
 ```bash
 vagrant ssh weave-demo-01
 cd /home/vagrant/producer
-sudo docker build --rm -t "khazrak/weaver-producer:1.0" .
+sudo docker build --rm -t "khazrak/weaver-consumer:1.0" .
 ```
 
 Host 2 (Producer 1)
@@ -64,7 +64,7 @@ Host 3 (Producer 2)
 ```bash
 vagrant ssh weave-demo-03
 cd /home/vagrant/consumer
-sudo docker build --rm -t "khazrak/weaver-consumer:1.0" .
+sudo docker build --rm -t "khazrak/weaver-producer:1.0" .
 ```
 
 ## Part 3 - Install and Start Weave
