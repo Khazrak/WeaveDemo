@@ -3,7 +3,8 @@ A Demonstration of Weave and Microservices
 
 Software requirements:
 Vagrant and VirtualBox (relatively new)
-JDK 8
+at least 50 gb free disc space
+JDK 8 (just for building the artifacts, you can do this in another computer).
 
 
 ## Part 0 - Clone the project
@@ -165,7 +166,7 @@ sudo docker stop prod1
 
 if X is 2 then on host 2 do:
 ```bash
-sudo docker stop prod1
+sudo docker stop prod2
 ```
 
 Then on host 1:
@@ -189,3 +190,21 @@ The End
 Karl Andersson 
 
 se.linkedin.com/in/karlandersson1987
+
+
+
+
+## Problems
+
+If you get:
+
+```bash
+There are errors in the configuration of this machine. Please fix
+the following errors and try again:
+
+File provisioner:
+* File upload source file /home/khazrak/Programming/WeaveDemo/weave-demo-consumer/build/libs/weave-demo-consumer-0.0.1-SNAPSHOT.jar must exist
+* File upload source file /home/khazrak/Programming/WeaveDemo/weave-demo-producer/build/libs/weave-demo-producer-0.0.1-SNAPSHOT.jar must exist
+```
+
+Then you haven't done part 1 (or it failed).
